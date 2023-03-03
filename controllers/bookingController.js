@@ -60,10 +60,15 @@ exports.webhookCheckout = catchAsync(async (req, res, next) => {
   try {
     event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
+    console.log(`Webhook error: ${err.message}`);
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
 
-  if (event.type === 'checkout.session.completed') createBookingCheckout(event.data.object);
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    console.log(`Checkout session completed with ID: ${session.id}`);
+    createBookingCheckout(session);
+  }
 
   res.status(200).json({ received: true });
 });
