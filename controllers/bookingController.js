@@ -9,7 +9,7 @@ const catchAsync = require('./../utils/catchAsync');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
-  
+
   if (!tour) return next(new AppError('Tour not found!', 404));
 
   // Crate checkout session
@@ -51,7 +51,7 @@ const createBookingCheckout = catchAsync(async session => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email }))._id;
   const price = session.amount_total / 100;
-  
+
   console.log(tour, user, price);
   await Booking.create({ tour, user, price });
 });

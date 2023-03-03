@@ -55,7 +55,7 @@ app.use(
 // Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
 app.post(
   '/webhook-checkout',
-  express.raw({ type: '*/*' }),
+  express.json({ type: 'application/json' }),
   bookingController.webhookCheckout
 );
 
@@ -129,9 +129,7 @@ app.all('*', (req, res, next) => {
     next(err);
   */
 
-  next(
-    new appError(`Cannot find the ${req.originalUrl} on this server!!`, 404)
-  );
+  next(new appError(`Cannot find the ${req.originalUrl} on this server!!`, 404));
 });
 
 app.use(globleErrorHandler);
