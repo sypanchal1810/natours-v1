@@ -16,11 +16,9 @@ const createAndSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
   res.cookie('jwt', token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
+    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: (req.secure || req.headers['x-forwarded-proto'] === 'https')
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   });
 
   // Remove password from output
@@ -30,8 +28,8 @@ const createAndSendToken = (user, statusCode, req, res) => {
     status: 'success',
     token,
     data: {
-      user
-    }
+      user,
+    },
   });
 };
 
@@ -85,43 +83,30 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and Check if it is there
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
 
   if (!token) {
-    return next(
-      new appError(`You are not logged in... Please login to get access`, 401)
-    );
+    return next(new appError(`You are not logged in... Please login to get access`, 401));
   }
 
   // 2) Verification Token
-  const decoded = await promisify(jwt.verify)(
-    token,
-    process.env.JWT_SECRET_KEY
-  );
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
 
   // 3) Check if user still exists
   const freshUser = await User.findById(decoded.id);
 
   if (!freshUser) {
-    return next(
-      new appError(`The user belonging to this token is no longer exists`, 401)
-    );
+    return next(new appError(`The user belonging to this token is no longer exists`, 401));
   }
 
   // 4) Check if user changed password after token was issued
   if (freshUser.changedPasswordAfter(decoded.iat)) {
     return next(
-      new appError(
-        `The user has recently changed the password. Please login again...`,
-        401
-      )
+      new appError(`The user has recently changed the password. Please login again...`, 401)
     );
   }
 
@@ -137,10 +122,7 @@ exports.isLoggedIn = async (req, res, next) => {
   try {
     if (req.cookies.jwt) {
       // 1) Verification Token
-      const decoded = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET_KEY
-      );
+      const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET_KEY);
       // 2) Check if user still exists
       const currentUser = await User.findById(decoded.id);
       if (!currentUser) {
@@ -165,9 +147,7 @@ exports.isLoggedIn = async (req, res, next) => {
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(
-        new appError(`You don't have permission to perform this action...`, 403)
-      );
+      return next(new appError(`You don't have permission to perform this action...`, 403));
     }
 
     next();
@@ -213,21 +193,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return next(
-      new appError(
-        'There was an error sending the email. Try again later!',
-        500
-      )
-    );
+    return next(new appError('There was an error sending the email. Try again later!', 500));
   }
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // 1) Get the user based on the token sent
-  const hashedToken = crypto
-    .createHash('sha256')
-    .update(req.params.token)
-    .digest('hex');
+  const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
 
   const user = await User.findOne({
     passwordResetToken: hashedToken,

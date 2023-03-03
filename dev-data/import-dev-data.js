@@ -7,10 +7,7 @@ const Review = require('./../models/reviewModel');
 
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 
 mongoose
   .connect(DB, {
@@ -30,15 +27,9 @@ mongoose
 
 // Reading JSON File
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/tours.json`, 'utf8')
-);
-const users = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/users.json`, 'utf8')
-);
-const reviews = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/reviews.json`, 'utf8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours.json`, 'utf8'));
+const users = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`, 'utf8'));
+const reviews = JSON.parse(fs.readFileSync(`${__dirname}/data/reviews.json`, 'utf8'));
 
 // Importing the data
 

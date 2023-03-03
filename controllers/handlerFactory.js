@@ -7,9 +7,7 @@ exports.deleteOne = Modal =>
     const doc = await Modal.findByIdAndDelete(req.params.id);
 
     if (!doc) {
-      return next(
-        new appError('Document not found with this id: ' + req.params.id, 404)
-      );
+      return next(new appError('Document not found with this id: ' + req.params.id, 404));
     }
 
     res.status(204).json({
@@ -26,9 +24,7 @@ exports.updateOne = Modal =>
     });
 
     if (!doc) {
-      return next(
-        new appError('Document not found with this id: ' + req.params.id, 404)
-      );
+      return next(new appError('Document not found with this id: ' + req.params.id, 404));
     }
 
     res.status(200).json({
@@ -60,9 +56,7 @@ exports.getOne = (Modal, popOptions) =>
     const doc = await query;
 
     if (!doc) {
-      return next(
-        new appError('Document not found with this id: ' + req.params.id, 404)
-      );
+      return next(new appError('Document not found with this id: ' + req.params.id, 404));
     }
 
     res.status(200).json({

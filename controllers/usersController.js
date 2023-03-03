@@ -63,9 +63,7 @@ exports.getMe = (req, res, next) => {
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
-    return next(
-      new appError(`Please use another route for updating password...`, 400)
-    );
+    return next(new appError(`Please use another route for updating password...`, 400));
   }
 
   // 2) Filtering out the field that are not allowed to update

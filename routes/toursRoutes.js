@@ -19,9 +19,7 @@ const router = express.Router();
 //   );
 router.use('/:tourId/reviews', reviewRoute);
 
-router
-  .route('/top-5-cheapest-tours')
-  .get(tourController.aliasTours, tourController.getAllTours);
+router.route('/top-5-cheapest-tours').get(tourController.aliasTours, tourController.getAllTours);
 
 router.route('/tour-stats').get(tourController.getTourStats);
 router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
@@ -35,13 +33,9 @@ router
     tourController.createTour
   );
 
-router
-  .route('/tour-within/:distance/center/:latlng/unit/:unit')
-  .get(tourController.getTourWithin);
+router.route('/tour-within/:distance/center/:latlng/unit/:unit').get(tourController.getTourWithin);
 
-router
-  .route('/tour-distances/:latlng/unit/:unit')
-  .get(tourController.getDistances);
+router.route('/tour-distances/:latlng/unit/:unit').get(tourController.getDistances);
 
 router
   .route('/:id')

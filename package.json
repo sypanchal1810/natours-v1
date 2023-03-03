@@ -12,7 +12,8 @@
     "start:prod": "SET NODE_ENV=production&& nodemon server.js",
     "debug": "ndb server.js",
     "watch": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled",
-    "build:js": "esbuild ./public/js/index.js --bundle --minify --outdir=./public/js/bundled"
+    "build:js": "esbuild ./public/js/index.js --bundle --minify --outdir=./public/js/bundled",
+    "format": "prettier --write */**.js"
   },
   "author": "saurabh",
   "license": "ISC",

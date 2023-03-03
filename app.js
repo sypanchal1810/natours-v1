@@ -18,9 +18,11 @@ const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
+const bookingController = require('./controllers/bookingController');
+
 const app = express();
 
-app.enable('trust proxy')
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -48,6 +50,13 @@ app.use(
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
   })
+);
+
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
 );
 
 // Body parser, reading data from body into req.body
@@ -82,7 +91,7 @@ app.use(
   })
 );
 
-app.use(compression())
+app.use(compression());
 
 // 3rd party middleware
 // Development logging
