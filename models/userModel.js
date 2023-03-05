@@ -76,7 +76,7 @@ userSchema.path('email').validate(async function (value) {
     email: value,
   });
   return !emailCount;
-}, 'Email already exists');
+}, 'Email already exists. Please Login with your existing Email.');
 
 // Encryption of password
 userSchema.pre('save', async function (req, res, next) {

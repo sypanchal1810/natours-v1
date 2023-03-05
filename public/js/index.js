@@ -1,7 +1,10 @@
 /* eslint-disable */
 import '@babel/polyfill';
+import axios from 'axios';
+
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
+import { signup } from './signup';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { showAlert } from './alerts';
@@ -9,16 +12,33 @@ import { showAlert } from './alerts';
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
+const signupForm = document.querySelector('.form--signup');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 
+const alertMessage = document.querySelector('body').dataset.alert;
+
 // DELEGATION
+if (alertMessage) showAlert('success', alertMessage, 20);
+
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
   displayMap(locations);
 }
+
+if (signupForm)
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('confirm-password').value;
+
+    signup(name, email, password, passwordConfirm);
+  });
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
@@ -28,7 +48,28 @@ if (loginForm)
     login(email, password);
   });
 
-if (logOutBtn) logOutBtn.addEventListener('click', logout);
+if (logOutBtn)
+  logOutBtn.addEventListener('click', async e => {
+    e.preventDefault();
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: '/api/v1/users/logout',
+      });
+      if ((res.data.status = 'success')) {
+        showAlert('success', 'Logging Out....!');
+        window.setTimeout(() => {
+          location.assign('/');
+        }, 1000);
+        window.setTimeout(() => {
+          location.reload(true);
+        }, 2000);
+      }
+    } catch (err) {
+      // console.log(err.response);
+      showAlert('error', 'Error logging out! Try again.');
+    }
+  });
 
 if (userDataForm)
   userDataForm.addEventListener('submit', e => {
@@ -64,6 +105,3 @@ if (bookBtn) {
     bookTour(tourId);
   });
 }
-
-const alertMessage = document.querySelector('body').dataset.alert;
-if (alertMessage) showAlert('success', alertMessage, 20);

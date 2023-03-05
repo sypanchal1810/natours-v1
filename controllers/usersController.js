@@ -6,15 +6,23 @@ const appError = require('./../utils/appErrors');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/img/users');
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-//   },
-// });
+// Firebase Configurations
+const firebaseApp = require('firebase/app');
+const firebaseStorage = require('firebase/storage');
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+};
+
+const fbApp = firebaseApp.initializeApp(firebaseConfig);
+const storage = firebaseStorage.getStorage(fbApp, process.env.FIREBASE_STORAGE_BUCKET_URL);
+
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -32,10 +40,9 @@ upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
+// Resize User profile photo to 500x500
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
-
-  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
   await sharp(req.file.buffer)
     .resize(500, 500)
@@ -43,7 +50,26 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     .jpeg({
       quality: 90,
     })
-    .toFile(`public/img/users/${req.file.filename}`);
+    .toBuffer();
+
+  next();
+});
+
+// User Profile photo uploading to firebase storage
+exports.uploadToFirebase = catchAsync(async (req, res, next) => {
+  const storageRef = firebaseStorage.ref(
+    storage,
+    `user_profile_photos/user-${req.user.id}-${Date.now()}.jpeg`
+  );
+  const metadata = { contentType: req.file.mimetype };
+  const snapshot = await firebaseStorage.uploadBytesResumable(
+    storageRef,
+    req.file.buffer,
+    metadata
+  );
+  const getDownloadUrl = await firebaseStorage.getDownloadURL(snapshot.ref);
+  req.file.filename = getDownloadUrl;
+
   next();
 });
 
