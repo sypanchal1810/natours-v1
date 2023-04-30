@@ -1,7 +1,14 @@
 extends base
 
 block content
-  main.main 
+  .header-container 
+  .header__text-box
+    h1.heading-primary-landing
+      span.heading-primary-landing--main Outdoors
+      span.heading-primary-landing--sub is where life happens
+    a.btn.btn--white.btn--animated(href='#section-tours') Discover our tours
+
+  main#section-tours.main
     .card-container
       each tour in tours
         .card
