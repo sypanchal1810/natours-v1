@@ -1,0 +1,291 @@
+.main {
+  background-color: #f7f7f7;
+  padding: 8rem 6rem;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+
+  @include respond(tab-land) {
+    padding: 6rem 4rem;
+  }
+
+  @include respond(tab-port) {
+    padding: 4rem 3rem;
+  }
+
+  @include respond(phone) {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.user-view {
+  background-color: #fff;
+  max-width: 120rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  border-radius: 3px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.07);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  &__menu {
+    -webkit-box-flex: 32rem;
+    -ms-flex: 32rem 0 0px;
+    flex: 32rem 0 0;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#28b487));
+    background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+    padding: 4rem 0;
+
+    @include respond(tab-land) {
+      -webkit-box-flex: 23rem;
+      -ms-flex: 23rem 0 0px;
+      flex: 23rem 0 0;
+    }
+  }
+
+  &__content {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 7rem 1rem;
+  }
+
+  &__form-container {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 8rem;
+  }
+}
+
+.side-nav {
+  list-style: none;
+
+  & li {
+    margin: 0.5rem 0;
+    border-left: 0 solid #fff;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  &--active,
+  & li:hover {
+    border-left: 4px solid #fff !important;
+  }
+
+  &--active a {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+
+  & a:link,
+  & a:visited {
+    padding: 1rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-decoration: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+
+    // @include respond(tab-land) {
+    //   font-size: 1.4rem;
+    //   padding: 1rem 3rem;
+    // }
+
+    @include respond(tab-land) {
+      font-size: 1.3rem;
+      padding: 1rem 3rem;
+    }
+
+    @include respond(phone) {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+    }
+  }
+
+  & a:hover,
+  & a:active {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+
+  & svg {
+    height: 1.9rem;
+    width: 1.9rem;
+    fill: #f7f7f7;
+    margin-right: 2rem;
+  }
+}
+
+.admin-nav {
+  margin-top: 5.5rem;
+
+  &__header {
+    width: 50%;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__heading {
+    padding-bottom: 3px;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: #f2f2f2;
+    border-bottom: 1px solid currentColor;
+
+    @include respond(tab-port) {
+      font-size: 1.4rem;
+    }
+
+    @include respond(phone) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.side-nav__checkbox {
+  display: none;
+}
+
+@include respond(phone) {
+  .user-view {
+    &__menu {
+      -webkit-box-flex: 22rem;
+      -ms-flex: 22rem 0 0px;
+      flex: 22rem 0 0;
+      transform: translateX(-17rem);
+      z-index: 99;
+      transition: all 0.1s;
+    }
+
+    &__content {
+      padding: 5rem 0;
+      position: relative;
+      transform: translateX(-9rem);
+    }
+
+    &__form-container {
+      width: 55vw;
+      padding: 0 2rem;
+    }
+  }
+
+  .side-nav__checkbox:checked {
+    & ~ .user-view__menu {
+      -webkit-box-flex: 20rem;
+      -ms-flex: 20rem 0 0px;
+      flex: 20rem 0 0;
+      transform: translateX(0rem);
+      z-index: 99;
+    }
+
+    & + .btn-mobile-side-nav {
+      left: 17.5rem;
+
+      & .icon-close {
+        display: block;
+      }
+
+      & .icon-open {
+        display: none;
+      }
+    }
+  }
+}
+
+// User Tours
+.card-container__user-profile {
+  max-width: 30rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5.5rem;
+}
+
+// User Reviews
+.review__card--container {
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.6);
+  border-radius: 3px;
+  padding: 4rem;
+  font-size: $default-font-size;
+  transform: skewX(-9deg);
+  cursor: auto;
+
+  @include respond(tab-port) {
+    width: 100%;
+    padding: 3rem;
+  }
+
+  @include respond(phone) {
+    min-width: 110%;
+    transform: skewX(-5deg);
+  }
+}
+
+.review__details {
+  margin-top: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: skewX(9deg);
+
+  @include respond(phone) {
+    transform: skewX(5deg);
+  }
+}
+
+.review__text {
+  font-weight: 400;
+
+  @include respond(phone) {
+    font-size: 1.2rem;
+  }
+}
+
+.review__tour {
+  font-size: 2rem;
+  font-weight: 600;
+
+  @include respond(phone) {
+    font-size: 1.4rem;
+  }
+}
+
+@media only screen and (max-width: 25.5em) {
+  .review__card--container {
+    text-align: center;
+  }
+
+  .user-view__content {
+    // transform: translateX(-11.5rem);
+    margin-left: -3rem;
+  }
+
+  .review__text {
+    font-size: 1.1rem;
+  }
+
+  .review__tour {
+    font-size: 1.25rem;
+  }
+}

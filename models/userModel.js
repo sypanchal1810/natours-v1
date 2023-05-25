@@ -2,70 +2,89 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'A user must have a name'],
-    lowercase: true,
-    trim: true,
-    // index: true,
-    //   unique: true,
-    //   match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-    //   maxlength: [50, 'The user name must have less than or equal to 50 characters'],
-    //   minlength: [10, 'The user name must have more than or equal to 10 characters'],
-  },
-  email: {
-    type: String,
-    required: [true, 'A user must have a email'],
-    lowercase: true,
-    trim: true,
-    match: [/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9.]+[a-zA-Z]{2,5}$/g, 'Please enter valid email address'],
-    unique: true,
-    index: true,
-  },
-  photo: {
-    type: String,
-    default: `${process.env.DEFAULT_USER_PROFILE_IMAGE_URL}`,
-    //   required: [true, 'A user must have a profile photo'],
-  },
-  role: {
-    type: String,
-    enum: ['admin', 'lead-guide', 'guide', 'user'],
-    default: 'user',
-  },
-  password: {
-    type: String,
-    required: [true, 'Please provide strong password'],
-    minlength: 8,
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, 'Please confirm your password'],
-    validate: {
-      // This only works with .create and .save
-      validator: function (el) {
-        return el === this.password;
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'A user must have a name'],
+      lowercase: true,
+      trim: true,
+      // index: true,
+      //   unique: true,
+      //   match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      //   maxlength: [50, 'The user name must have less than or equal to 50 characters'],
+      //   minlength: [10, 'The user name must have more than or equal to 10 characters'],
+    },
+    email: {
+      type: String,
+      required: [true, 'A user must have a email'],
+      lowercase: true,
+      trim: true,
+      match: [/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9.]+[a-zA-Z]{2,5}$/g, 'Please enter valid email address'],
+      unique: true,
+      index: true,
+    },
+    photo: {
+      type: String,
+      default: `${process.env.DEFAULT_USER_PROFILE_IMAGE_URL}`,
+      //   required: [true, 'A user must have a profile photo'],
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'lead-guide', 'guide', 'user'],
+      default: 'user',
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide strong password'],
+      minlength: 8,
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, 'Please confirm your password'],
+      validate: {
+        // This only works with .create and .save
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: 'Passwords are not same!!',
       },
-      message: 'Passwords are not same!!',
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    createdAt: {
+      type: Date,
+      select: false,
+    },
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
+    },
+    updatedAt: {
+      type: Date,
+      select: false,
     },
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  createdAt: {
-    type: Date,
-    select: false,
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
-  updatedAt: {
-    type: Date,
-    select: false,
-  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+// Virtual Properties
+userSchema.virtual('bookedTours', {
+  ref: 'Booking',
+  foreignField: 'user',
+  localField: '_id',
+});
+
+userSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'user',
+  localField: '_id',
 });
 
 // Small utility function for checking if email is already exists

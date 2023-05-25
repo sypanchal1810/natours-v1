@@ -1,15 +1,22 @@
 footer.footer
-  .footer__logo
+  picture.footer__logo
+    source(
+      srcset='/img/logo-green-1x.png, /img/logo-green-2x.png 2x',
+      media='(max-width: 56.25em)',
+      alt='Natours logo'
+    )
     img(src='/img/logo-green.png', alt='Natours logo')
+
   ul.footer__nav
     li
-      a(href='#') About us
+      a(href=`${url}#section-about`) About Natours
     li
-      a(href='#') Download apps
+      a(href=`${url}#section-features`) Your Benefits
     li
-      a(href='#') Become a guide
+      a(href=`${url}#section-tours`) Popular Tours
     li
-      a(href='#') Careers
+      a(href=`${url}#section-stories`) User Stories
     li
-      a(href='#') Contact
+      a(href=`${url}#section-apply`) Become a guide
+
   p.footer__copyright Developed By Saurabh Panchal. &copy; by Jonas Schmedtmann. All rights reserved.

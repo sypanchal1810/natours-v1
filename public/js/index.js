@@ -26,7 +26,67 @@ const resetPasswordForm = document.querySelector('.form--resetPassword');
 
 const alertMessage = document.querySelector('body').dataset.alert;
 
+let navCheckbox = document.querySelector('.nav__checkbox');
+let navLinks = document.querySelectorAll('.nav__link');
+
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+// Side nav links
+let sideNavLinks = document.querySelectorAll('.side-nav--link');
+
 // DELEGATION
+
+// Toggle the active class in side nav of user profile
+if (sideNavLinks) {
+  const url = window.location.href;
+
+  sideNavLinks.forEach(link => {
+    if (url.includes('my-account') && link.textContent.includes('Settings')) {
+      link.classList.toggle('side-nav--active');
+    }
+
+    if (url.includes('my-tours') && link.textContent.includes('My Bookings')) {
+      link.classList.toggle('side-nav--active');
+    }
+
+    if (url.includes('my-reviews') && link.textContent.includes('My Reviews')) {
+      link.classList.toggle('side-nav--active');
+    }
+  });
+}
+
+// Scroll to Top Button
+if (scrollToTopBtn) {
+  window.onscroll = () => {
+    if (
+      document.body.scrollTop > window.innerHeight ||
+      document.documentElement.scrollTop > window.innerHeight
+    ) {
+      scrollToTopBtn.style.opacity = 1;
+      scrollToTopBtn.style.display = 'block';
+    } else {
+      scrollToTopBtn.style.opacity = 0;
+      scrollToTopBtn.style.display = 'none';
+    }
+  };
+
+  scrollToTopBtn.addEventListener('click', function (e) {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+}
+
+// For mobile navigation
+if (navCheckbox) {
+  do {
+    navLinks.forEach(link =>
+      link.addEventListener('click', () => {
+        navCheckbox.checked = false;
+      })
+    );
+  } while (navCheckbox.checked);
+}
+
 if (alertMessage) showAlert('success', alertMessage, 20);
 
 if (mapBox) {
@@ -83,14 +143,16 @@ if (logOutBtn)
         method: 'GET',
         url: '/api/v1/users/logout',
       });
+
       if ((res.data.status = 'success')) {
         showAlert('success', 'Logging Out...!');
         window.setTimeout(() => {
           location.assign('/');
         }, 2000);
+
         window.setTimeout(() => {
           location.reload(true);
-        }, 4000);
+        }, 3000);
       }
     } catch (err) {
       // console.log(err.response);

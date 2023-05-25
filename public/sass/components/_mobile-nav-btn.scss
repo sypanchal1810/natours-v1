@@ -1,0 +1,47 @@
+// Header Home
+.btn-mobile-nav {
+  border: none;
+  display: inline;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1.25rem;
+  transition: all 0.1s ease-out;
+}
+
+.icon-mobile-nav {
+  height: 3.5rem;
+  width: 3.5rem;
+  color: $color-primary-dark;
+  display: none;
+}
+
+// Side Nav - User Profile
+.btn-mobile-side-nav {
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  left: 2.5rem;
+  top: 3.5rem;
+  transition: all 0.1s ease-out;
+  z-index: 99999;
+}
+
+.icon-mobile-side-nav {
+  height: 3.2rem;
+  width: 3.2rem;
+  color: #333;
+  display: none;
+}
+
+// Open and Close icons
+.icon-close {
+  display: none;
+}
+
+@include respond(phone) {
+  .icon-open {
+    display: block;
+  }
+}

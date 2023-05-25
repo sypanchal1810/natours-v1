@@ -1,0 +1,23 @@
+extends user-profile
+
+mixin reviewCard(r)
+  .row
+    .review__card--container
+      .review__details
+        p.review__text.u-margin-bottom-small= r.review
+
+        p.reviews__rating.u-margin-bottom-small
+          each star in [1,2,3,4,5]
+            svg.reviews__star(class=`reviews__star--${r.rating >= star ? 'active' : 'inactive'}`)
+              use(xlink:href='/img/icons.svg#icon-star')
+
+        p.review__tour= `— ${r.tour.name}`
+
+block user-view
+  .user-view__reviews-container
+    .u-center-text.u-margin-bottom-medium
+      h2.heading-secondary My Reviews
+
+    .reviews__user-profile
+      each review in reviews
+        +reviewCard(review)

@@ -1,7 +1,7 @@
 {
   "name": "natours",
-  "version": "1.0.0",
-  "description": "Booking tour api",
+  "version": "2.0.0",
+  "description": "Natours - Outdoor is where the adventure begins",
   "main": "app.js",
   "targets": {
     "main": false
@@ -11,11 +11,11 @@
     "dev": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production&& nodemon server.js",
     "debug": "ndb server.js",
-    "watch": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled",
+    "watch:js": "esbuild ./public/js/index.js --bundle --minify --outdir=./public/js/bundled --watch",
     "build:js": "esbuild ./public/js/index.js --bundle --minify --outdir=./public/js/bundled",
-    "format": "prettier --write **/**.**",
     "watch:sass": "node-sass ./public/sass/main.scss ./public/css/style.css -w",
-    "compile:sass": "node-sass ./public/sass/main.scss ./public/css/style.css"
+    "build:sass": "node-sass ./public/sass/main.scss ./public/css/style.css",
+    "format": "prettier --write **/**.**"
   },
   "author": "saurabh",
   "license": "ISC",
@@ -76,6 +76,6 @@
     "url": "^0.11.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=16.0.0"
   }
 }

@@ -67,17 +67,20 @@ exports.getOne = (Modal, popOptions) =>
     });
   });
 
-exports.getAll = Modal =>
+exports.getAll = (Modal, popOptions) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
-    if (req.params.tourId) filter = { tour: req.params.tourId };
+    if (req.params.tourId) {
+      filter = { tour: req.params.tourId };
+    }
+
+    let query = Modal.find(filter);
+
+    if (popOptions) query = query.populate(popOptions);
 
     // Execute Query
-    const features = new APIFeatures(Modal.find(filter), req.query)
-      .filter()
-      .sort()
-      .paginate()
-      .limitFields();
+    const features = new APIFeatures(query, req.query).filter().sort().paginate().limitFields();
+
     const doc = await features.query;
     // const doc = await features.query.explain();
 

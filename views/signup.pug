@@ -1,9 +1,13 @@
 extends base
 
 block content
-  main.main
+  //- Header
+  include _header
+
+  main.form-main.u-margin-bottom-big 
     .signup-form
       h2.heading-secondary.ma-bt-lg Create your account
+
       form.form.form--signup
         .form__group
           label.form__label(for='name') Username

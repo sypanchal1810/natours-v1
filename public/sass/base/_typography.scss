@@ -1,60 +1,120 @@
-.heading-secondary {
-    font-size: 2.25rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    background-image: -webkit-gradient(linear, left top, right top, from($color-primary-light), to($color-primary-dark));
-    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: 0.1rem;
-    line-height: 1.3;
-  }
-  .heading-secondary--error {
-    background-image: -webkit-gradient(linear, left top, right top, from($color-secondary-dark), to($color-failure));
-    background-image: linear-gradient(to right, $color-secondary-dark, $color-failure);
-    font-size: 3.5rem;
-  }
-  
-  .heading-primary,
-  .heading-tertirary {
-    color: $color-white;
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-  .heading-primary span,
-  .heading-tertirary span {
-    padding: 1rem 1.5rem;
-    line-height: 1;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      right bottom,
-      from(rgba(125, 213, 111, 0.85)),
-      to(rgba(40, 180, 135, 0.85))
-    );
-    background-image: linear-gradient(
-      to bottom right,
-      rgba(125, 213, 111, 0.85),
-      rgba(40, 180, 135, 0.85)
-    );
-  }
-  
-  .heading-primary {
+.heading {
+  &-primary {
     font-size: 5rem;
     text-align: center;
     width: 70%;
     margin: 0 auto;
+    color: $color-white;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    & span {
+      padding: 1rem 1.5rem;
+      line-height: 1;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(rgba(125, 213, 111, 0.85)),
+        to(rgba(40, 180, 135, 0.85))
+      );
+
+      background-image: linear-gradient(
+        to bottom right,
+        rgba(125, 213, 111, 0.85),
+        rgba(40, 180, 135, 0.85)
+      );
+    }
   }
-  
-  .heading-tertirary {
-    font-size: 2.75rem;
-    text-align: right;
-    position: absolute;
-    bottom: 1rem;
-    right: 2rem;
-    width: 70%;
-    z-index: 10;
+
+  &-secondary {
+    font-size: 2.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from($color-primary-light),
+      to($color-primary-dark)
+    );
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.3;
+    letter-spacing: 0.2rem;
+    transition: all 0.2s;
+
+    @include respond(tab-port) {
+      font-size: 3rem;
+    }
+
+    @include respond(phone) {
+      font-size: 1.75rem;
+    }
+
+    &--error {
+      background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from($color-secondary-dark),
+        to($color-failure)
+      );
+      background-image: linear-gradient(to right, $color-secondary-dark, $color-failure);
+      font-size: 3.5rem;
+    }
   }
-  
+
+  &-tertiary {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &-primary-landing {
+    color: $color-white;
+    text-transform: uppercase;
+    backface-visibility: hidden;
+    margin-bottom: 6rem;
+
+    &--main {
+      display: block;
+      font-size: 6rem;
+      font-weight: 400;
+      letter-spacing: 3.5rem;
+      animation-name: moveInLeft;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+
+      @include respond(phone) {
+        font-size: 4rem;
+        letter-spacing: 1.5rem;
+      }
+    }
+
+    &--sub {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1rem;
+      animation: moveInRight 1s ease-out;
+
+      @include respond(phone) {
+        font-size: 1rem;
+        letter-spacing: 0.5rem;
+      }
+    }
+  }
+}
+
+.paragraph {
+  font-size: 1.4rem;
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}

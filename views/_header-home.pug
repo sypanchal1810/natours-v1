@@ -1,0 +1,43 @@
+header.header
+  .header--logo
+    a(href='/') 
+      picture.header__logo--home
+        source(
+          srcset='/img/logo-green-1x.png, /img/logo-green-2x.png 2x',
+          media='(max-width: 47.5em)',
+          alt='Natours logo'
+        )
+        img(src='/img/logo-green.png', alt='Natours logo')
+
+  input#navi-toggle.nav__checkbox(type='checkbox')
+  label.btn-mobile-nav(for='navi-toggle')
+    ion-icon.icon-mobile-nav.icon-open(name='list-circle')
+    ion-icon.icon-mobile-nav.icon-close(name='close') 
+
+  nav.nav
+    ul.nav__list
+      li.nav__item
+        a.nav__link(href='#section-about') About Natours
+      li.nav__item
+        a.nav__link(href='#section-features') Your benefits
+      li.nav__item
+        a.nav__link(href='#section-tours') Popular tours
+      li.nav__item
+        a.nav__link(href='#section-stories') User Stories
+      li.nav__item
+        a.nav__link(href='#section-apply') Become a Guide
+
+  nav.nav--user
+    ul.nav--user__list
+      if user
+        li.nav--user__item
+          a.nav--user__link.nav__el--logout(href='/') Logout
+        li.nav--user__item
+          a.nav--user__link(href='/my-account')
+            img.nav__user-img(src=`${user.photo}`, alt=`Photo of ${user.name}`)
+            span.username= user.name.split(' ')[0]
+      else
+        li.nav--user__item
+          a.nav--user__link(href='/login') Login
+        li.nav--user__item
+          a.nav--user__link(href='/signup') Sign Up

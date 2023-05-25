@@ -11,7 +11,7 @@ const compression = require('compression');
 const cors = require('cors');
 
 const appError = require('./utils/appErrors');
-const globleErrorHandler = require('./controllers/errorController');
+const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/toursRoutes');
 const userRouter = require('./routes/usersRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -128,6 +128,6 @@ app.all('*', (req, res, next) => {
   next(new appError(`Cannot find the ${req.originalUrl} on this server!!`, 404));
 });
 
-app.use(globleErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;

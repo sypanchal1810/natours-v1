@@ -14,30 +14,50 @@ export const displayMap = locations => {
 
   const bounds = new mapboxgl.LngLatBounds();
 
+  map.on('load', function () {
+    locations.forEach(loc => {
+      new mapboxgl.Popup({
+        offset: 30,
+        focusAfterOpen: false,
+        closeOnClick: false,
+      })
+        .setLngLat(loc.coordinates)
+        .setHTML(`<p>Day ${loc.day}: ${loc.description}</p>`)
+        .addTo(map);
+    });
+  });
+
   locations.forEach(loc => {
     // Create marker
     const el = document.createElement('div');
     el.className = 'marker';
 
     // Add marker
-    new mapboxgl.Marker({
+    let marker = new mapboxgl.Marker({
       element: el,
       anchor: 'bottom',
     })
       .setLngLat(loc.coordinates)
-      .addTo(map);
-
-    // Add popup
-    new mapboxgl.Popup({
-      offset: 30,
-      focusAfterOpen: false,
-    })
-      .setLngLat(loc.coordinates)
-      .setHTML(`<p>Day ${loc.day}: ${loc.description}</p>`)
+      .setPopup(
+        // Add popup
+        new mapboxgl.Popup({
+          offset: 30,
+          focusAfterOpen: false,
+          closeOnClick: false,
+        })
+          .setLngLat(loc.coordinates)
+          .setHTML(`<p>Day ${loc.day}: ${loc.description}</p>`)
+          .addTo(map)
+      )
       .addTo(map);
 
     // Extend map bounds to include current location
     bounds.extend(loc.coordinates);
+
+    map.on('click', marker, function (e) {
+      // open the popup at the clicked location
+      popup.setLngLat(e.lngLat).addTo(map);
+    });
   });
 
   map.fitBounds(bounds, {

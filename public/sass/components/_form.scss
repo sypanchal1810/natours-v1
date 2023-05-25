@@ -1,0 +1,235 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2.5rem;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1.5rem;
+    color: inherit;
+    padding: 1.25rem 1.75rem;
+    border: none;
+    background-color: $color-grey-light-1;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+
+    @include respond(phone) {
+      width: 100%;
+      font-size: 1.2rem;
+      color: inherit;
+      padding: 1rem 1.25rem;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 3px solid $color-primary;
+    }
+
+    &:focus:invalid {
+      border-bottom: 3px solid $color-secondary-dark;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+
+  &__label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0.7rem auto;
+    display: block;
+    transition: all 0.3s;
+
+    @include respond(phone) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__input:placeholder-shown + &__label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4rem);
+  }
+
+  &__radio-group {
+    width: 50%;
+    display: inline-block;
+
+    @include respond(phone) {
+      width: 50%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__radio-input {
+    display: none;
+  }
+
+  &__radio-label {
+    font-size: $default-font-size;
+    cursor: pointer;
+    position: relative;
+    padding-left: 4.5rem;
+    font-weight: 400;
+
+    @include respond(phone) {
+      font-size: 1.2rem;
+      padding-left: 2.5rem;
+    }
+  }
+
+  &__radio-button {
+    height: 3rem;
+    width: 3rem;
+    border: 5px solid $color-primary;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: -0.4rem;
+
+    @include respond(phone) {
+      height: 2rem;
+      width: 2rem;
+      top: -0.2rem;
+      border: 2.5px solid $color-primary;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      height: 1.3rem;
+      width: 1.3rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: $color-primary;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+
+  &__radio-input:checked ~ &__radio-label &__radio-button::after {
+    opacity: 1;
+  }
+
+  &__photo-upload {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 1.6rem;
+
+    @include respond(phone) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__user-photo {
+    height: 7.5rem;
+    width: 7.5rem;
+    border-radius: 50%;
+    margin-right: 2rem;
+
+    @include respond(phone) {
+      height: 4.5rem;
+      width: 4.5rem;
+    }
+  }
+
+  &__upload {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &__upload:focus + label {
+    outline: 3px solid $color-primary;
+    outline-offset: 3px;
+  }
+
+  &__upload + label {
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;
+    padding: 3px;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  &__upload + label:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+  }
+}
+
+.form-main {
+  background-color: #f7f7f7;
+  padding: 6rem 4rem;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+
+  @include respond(phone) {
+    padding: 5rem 2rem;
+  }
+}
+
+.login-form,
+.signup-form,
+.forgot_reset-form {
+  margin: 0 auto;
+  max-width: 55rem;
+  background-color: $color-white;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 5rem 7rem;
+  border-radius: 5px;
+
+  @include respond(phone) {
+    padding: 4rem 5rem;
+  }
+}
+
+.external-links {
+  &,
+  & a,
+  & a:visited {
+    display: block;
+    font-family: inherit;
+    color: inherit;
+    font-size: 1.7rem;
+    font-weight: 700;
+    float: right;
+    text-decoration: underline;
+    color: blue;
+    margin-top: 0.7rem;
+  }
+}

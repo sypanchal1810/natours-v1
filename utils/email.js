@@ -13,24 +13,24 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // ETHEREAL
-      return nodemailer.createTransport({
-        host: process.env.ETHEREAL_HOST,
-        port: process.env.ETHEREAL_PORT,
-        auth: {
-          user: process.env.ETHEREAL_USERNAME,
-          pass: process.env.ETHEREAL_PASSWORD,
-        },
-        secure: false, // true for 465, false for other ports
-      });
+      // return nodemailer.createTransport({
+      //   host: process.env.ETHEREAL_HOST,
+      //   port: process.env.ETHEREAL_PORT,
+      //   auth: {
+      //     user: process.env.ETHEREAL_USERNAME,
+      //     pass: process.env.ETHEREAL_PASSWORD,
+      //   },
+      //   secure: false, // true for 465, false for other ports
+      // });
 
       // GMAIL
-      // return nodemailer.createTransport({
-      //   service: 'gmail',
-      //   auth: {
-      //     user: process.env.GMAIL_USERNAME,
-      //     pass: process.env.GMAIL_PASSWORD,
-      //   },
-      // });
+      return nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USERNAME,
+          pass: process.env.GMAIL_PASSWORD,
+        },
+      });
     }
 
     return nodemailer.createTransport({

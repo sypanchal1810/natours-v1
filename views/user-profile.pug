@@ -1,0 +1,39 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`side-nav--link ${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`/img/icons.svg#icon-${icon}`)
+      | #{ text }
+
+block content
+  //- Header
+  include _header
+
+  main.main.u-margin-bottom-big
+    .user-view
+      input#navi-toggle.side-nav__checkbox(type='checkbox')
+      label.btn-mobile-side-nav(for='navi-toggle')
+        ion-icon.icon-mobile-side-nav.icon-open(name='list-circle')
+        ion-icon.icon-mobile-side-nav.icon-close(name='close')
+
+      nav.user-view__menu 
+        ul.side-nav
+          +navItem('/my-account', 'Settings', 'settings',)
+          +navItem('/my-tours', 'My Bookings', 'briefcase')
+          +navItem('/my-reviews', 'My Reviews', 'star')
+
+        - if(user.role === 'admin')                    
+          .admin-nav
+            .admin-nav__header
+              h5.admin-nav__heading Admin
+            ul.side-nav
+              +navItem('#', 'Manage Tours', 'map')
+              +navItem('#', 'Manage Users', 'users')
+              +navItem('#', 'Manage Reviews', 'star')
+              +navItem('#', 'Manage Bookings', 'briefcase')
+
+      .user-view__content
+        // user-view content
+        block user-view
