@@ -102,7 +102,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 
 // CRUD
 exports.createTour = factory.createOne(Tour);
-exports.getTour = factory.getOne(Tour, { path: 'reviews' });
+exports.getTour = factory.getOne(Tour, { path: 'bookedBy reviews' });
 exports.updateTour = factory.updateOne(Tour);
 exports.deleteTour = factory.deleteOne(Tour);
 exports.getAllTours = factory.getAll(Tour);

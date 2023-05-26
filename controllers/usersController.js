@@ -61,14 +61,17 @@ exports.uploadToFirebase = catchAsync(async (req, res, next) => {
     storage,
     `user_profile_photos/user-${req.user.id}-${Date.now()}.jpeg`
   );
-  const metadata = { contentType: req.file.mimetype };
-  const snapshot = await firebaseStorage.uploadBytesResumable(
-    storageRef,
-    req.file.buffer,
-    metadata
-  );
-  const getDownloadUrl = await firebaseStorage.getDownloadURL(snapshot.ref);
-  req.file.filename = getDownloadUrl;
+
+  if (req.file) {
+    const metadata = { contentType: req.file.mimetype };
+    const snapshot = await firebaseStorage.uploadBytesResumable(
+      storageRef,
+      req.file.buffer,
+      metadata
+    );
+    const getDownloadUrl = await firebaseStorage.getDownloadURL(snapshot.ref);
+    req.file.filename = getDownloadUrl;
+  }
 
   next();
 });
@@ -94,7 +97,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   // 2) Filtering out the field that are not allowed to update
   const filterBody = filterObj(req.body, 'name', 'email');
-  if (req.file) filterBody.photo = req.file.filename;
+
+  console.log(req.file);
+
+  if (req.file) {
+    console.log(req.file);
+    filterBody.photo = req.file.filename;
+  }
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
@@ -128,4 +137,4 @@ exports.createUser = (req, res) => {
 exports.getUser = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
-exports.getAllUsers = factory.getAll(User, { path: 'reviews' });
+exports.getAllUsers = factory.getAll(User, { path: 'bookedTours reviews' });

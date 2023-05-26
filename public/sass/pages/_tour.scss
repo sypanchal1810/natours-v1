@@ -1,8 +1,20 @@
 .section-header {
   position: relative;
-  height: 38vw;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+  height: 80vh;
   -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+
+  @include respond(tab-land) {
+    height: 66vh;
+  }
+
+  @include respond(tab-port) {
+    height: 55vh;
+  }
+
+  @include respond(phone) {
+    height: 40vh;
+  }
 }
 
 .header__hero {
@@ -41,6 +53,15 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 
+  @include respond(tab-port) {
+    top: 40%;
+    width: 52rem;
+  }
+
+  @include respond(phone) {
+    width: 26rem;
+  }
+
   &__group {
     color: $color-grey-light-1;
     margin-top: 3rem;
@@ -53,6 +74,10 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+
+    @include respond(phone) {
+      margin-top: 1.5rem;
+    }
   }
 
   &__detail {
@@ -66,14 +91,27 @@
     -ms-flex-align: center;
     align-items: center;
     text-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15);
+
+    @include respond(phone) {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
   }
 
   &__detail svg {
     margin-right: 0.8rem;
+
+    @include respond(phone) {
+      margin-right: 0.4rem;
+    }
   }
 
   &__detail:not(:last-child) {
     margin-right: 4rem;
+
+    @include respond(phone) {
+      margin-right: 2.2rem;
+    }
   }
 
   &__icon {
@@ -82,6 +120,11 @@
     fill: currentColor;
     -webkit-filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
     filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
+
+    @include respond(phone) {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
   }
 }
 
@@ -100,15 +143,21 @@
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
   }
+
+  @include respond(phone) {
+    flex-direction: column-reverse;
+  }
 }
 
 .description-box {
-  & .description {
-    margin-right: 5rem;
+  @include respond(phone) {
+    padding: 10rem 8rem;
   }
+
   & .description__text {
     font-size: 1.7rem;
   }
+
   & .description__text:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -122,6 +171,12 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+
+  @include respond(phone) {
+    align-items: center;
+    flex-direction: column;
+    padding: 8rem 6rem 10rem 6rem;
+  }
 
   &__group:not(:last-child) {
     margin-bottom: 7rem;
@@ -280,6 +335,10 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 
+  @include respond(phone) {
+    column-gap: 3rem;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -344,8 +403,6 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    // justify-content: center;
-    // align-items: center;
   }
 
   &__star {
@@ -367,21 +424,46 @@
   margin-top: calc(0px - var(--section-rotate));
   padding: 3rem;
   padding-bottom: 11rem;
-  padding-top: calc(15rem + var(--section-rotate));
+  padding-top: calc(10rem + var(--section-rotate));
   background-color: $color-grey-light-1;
+
+  @include respond(phone) {
+    padding-top: calc(8rem + var(--section-rotate));
+  }
 }
 
 .cta {
   position: relative;
-  max-width: 105rem;
+  max-width: 100rem;
   margin: 0 auto;
   overflow: hidden;
   background-color: $color-white;
-  padding: 9rem 5rem 9rem 21rem;
+  padding: 9rem 5rem 9rem 20rem;
   border-radius: 2rem;
   -webkit-box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
   margin-bottom: 10rem;
+
+  @include respond(tab-land) {
+    padding: 9rem 5rem 9rem 18rem;
+    text-align: center;
+  }
+
+  @include respond(tab-port) {
+    padding: 8rem 5rem 8rem 16rem;
+  }
+
+  @media only screen and (max-width: 46.2em) {
+    padding: 5rem 5rem 4rem 14rem;
+  }
+
+  @include respond(phone) {
+    padding: 4rem 3rem 3rem 13rem;
+  }
+
+  @media only screen and (max-width: 29em) {
+    width: 38rem;
+  }
 
   &__img {
     height: 15rem;
@@ -392,6 +474,21 @@
     border-radius: 50%;
     -webkit-box-shadow: 1rem 0.5rem 3rem rgba(0, 0, 0, 0.15);
     box-shadow: 1rem 0.5rem 3rem rgba(0, 0, 0, 0.15);
+
+    @include respond(tab-land) {
+      height: 12rem;
+      width: 12rem;
+    }
+
+    @include respond(tab-port) {
+      height: 10rem;
+      width: 10rem;
+    }
+
+    @include respond(phone) {
+      height: 8rem;
+      width: 8rem;
+    }
 
     &--logo {
       padding: 2rem;
@@ -443,10 +540,19 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    justify-content: center;
   }
 
   &__text {
     font-size: 1.9rem;
     font-weight: 400;
+
+    @include respond(tab-land) {
+      font-size: 1.7rem;
+    }
+
+    @include respond(phone) {
+      font-size: 1.3rem;
+    }
   }
 }

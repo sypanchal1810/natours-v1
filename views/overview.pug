@@ -198,7 +198,10 @@ block content
                     | Lead Guide
 
               .form__group
-                button.btn.btn--green(type='submit') Apply
+                - if(user)
+                  button.btn.btn--green(type='submit') Apply
+                - else
+                  button.btn.btn--green(type='submit') Login to Apply
 
     //- Scroll To Top Button
     button#scrollToTop.btn--top

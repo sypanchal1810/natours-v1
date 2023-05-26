@@ -138,6 +138,12 @@ tourSchema.virtual('reviews', {
   localField: '_id',
 });
 
+tourSchema.virtual('bookedBy', {
+  ref: 'Booking',
+  foreignField: 'tour',
+  localField: '_id',
+});
+
 // Document Middleware
 // This only works with .save and .create , not with .update
 tourSchema.pre('save', function (next) {

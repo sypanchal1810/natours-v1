@@ -18,9 +18,14 @@
     border: none;
     cursor: pointer;
 
+    @include respond(tab-land) {
+      padding: 1.3rem 2.3rem !important;
+      font-size: 1.4rem !important;
+    }
+
     @include respond(phone) {
-      padding: 1.2rem 2rem !important;
-      font-size: 1.3rem !important;
+      padding: 1.2rem 1.9rem !important;
+      font-size: 1.25rem !important;
     }
   }
 
@@ -180,5 +185,10 @@
       );
       color: $color-grey-dark-3;
     }
+  }
+
+  &--disabled:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 }

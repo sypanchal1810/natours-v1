@@ -17,6 +17,7 @@ const router = express.Router();
 //     authController.restrictTo('user'),
 //     reviewController.createReview
 //   );
+
 router.use('/:tourId/reviews', reviewRoute);
 
 router.route('/top-5-cheapest-tours').get(tourController.aliasTours, tourController.getAllTours);

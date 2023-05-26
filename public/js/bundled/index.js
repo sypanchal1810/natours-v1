@@ -8156,17 +8156,18 @@ Check your email and reset your password with given link.`
   };
   var Sf = async (r, e) => {
     try {
-      (
-        await rr({
-          method: 'PATCH',
-          url: e === 'password' ? '/api/v1/users/updatePassword' : '/api/v1/users/updateMe',
-          data: r,
-        })
-      ).data.status === 'success' &&
-        ($('success', `${e.toUpperCase()} updated successfully!`),
-        window.setTimeout(() => {
-          location.reload(!0);
-        }, 1500));
+      console.log(r),
+        (
+          await rr({
+            method: 'PATCH',
+            url: e === 'password' ? '/api/v1/users/updatePassword' : '/api/v1/users/updateMe',
+            data: r,
+          })
+        ).data.status === 'success' &&
+          ($('success', `${e.toUpperCase()} updated successfully!`),
+          window.setTimeout(() => {
+            location.reload(!0);
+          }, 1500));
     } catch (t) {
       $('error', t.response.data.message);
     }
@@ -8185,12 +8186,12 @@ Check your email and reset your password with given link.`
   var tb = document.getElementById('map'),
     nb = document.querySelector('.form--login'),
     ib = document.querySelector('.nav__el--logout'),
-    ub = document.querySelector('.form-user-data'),
-    ob = document.querySelector('.form-user-password'),
-    ab = document.getElementById('book-tour'),
-    sb = document.querySelector('.form--signup'),
-    fb = document.querySelector('.form--forgotPassword'),
-    cb = document.querySelector('.form--resetPassword'),
+    ub = document.querySelector('.form--signup'),
+    ob = document.querySelector('.form--forgotPassword'),
+    ab = document.querySelector('.form--resetPassword'),
+    sb = document.querySelector('.form-user-data'),
+    fb = document.querySelector('.form-user-password'),
+    cb = document.getElementById('book-tour'),
     lb = document.querySelector('body').dataset.alert,
     Ef = document.querySelector('.nav__checkbox'),
     B2 = document.querySelectorAll('.nav__link'),
@@ -8233,8 +8234,8 @@ Check your email and reset your password with given link.`
     let r = JSON.parse(tb.dataset.locations);
     Xw(r);
   }
-  sb &&
-    sb.addEventListener('submit', r => {
+  ub &&
+    ub.addEventListener('submit', r => {
       r.preventDefault();
       let e = document.getElementById('name').value,
         t = document.getElementById('email').value,
@@ -8242,14 +8243,14 @@ Check your email and reset your password with given link.`
         i = document.getElementById('confirm-password').value;
       Qw(e, t, n, i);
     });
-  fb &&
-    fb.addEventListener('submit', r => {
+  ob &&
+    ob.addEventListener('submit', r => {
       r.preventDefault();
       let e = document.getElementById('email').value;
       Yw(e);
     });
-  cb &&
-    cb.addEventListener('submit', r => {
+  ab &&
+    ab.addEventListener('submit', r => {
       r.preventDefault();
       let { resetToken: e } = document.getElementById('change-password').dataset,
         t = document.getElementById('password').value,
@@ -8280,17 +8281,17 @@ Check your email and reset your password with given link.`
         $('error', 'Error while Logging Out! Try again.');
       }
     });
-  ub &&
-    ub.addEventListener('submit', r => {
+  sb &&
+    sb.addEventListener('submit', r => {
       r.preventDefault();
       let e = new FormData();
       e.append('name', document.getElementById('name').value),
         e.append('email', document.getElementById('email').value),
-        e.append('photo', document.getElementById('photo').files[0]),
+        e.append('photo', document.getElementById('photo').files?.[0]),
         Sf(e, 'data');
     });
-  ob &&
-    ob.addEventListener('submit', async r => {
+  fb &&
+    fb.addEventListener('submit', async r => {
       r.preventDefault(),
         (document.querySelector('.btn--save-password').textContent = 'Updating...');
       let e = document.getElementById('password-current').value,
@@ -8302,8 +8303,8 @@ Check your email and reset your password with given link.`
         (document.getElementById('password').value = ''),
         (document.getElementById('password-confirm').value = '');
     });
-  ab &&
-    ab.addEventListener('click', r => {
+  cb &&
+    cb.addEventListener('click', r => {
       r.target.textContent = 'Processing...';
       let { tourId: e } = r.target.dataset;
       eb(e);
