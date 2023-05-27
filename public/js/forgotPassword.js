@@ -13,10 +13,7 @@ export const forgotPassword = async email => {
     });
 
     if (res.data.status === 'success') {
-      showAlert(
-        'success',
-        'Reset Password email sent successfully. \nCheck your email and reset your password with given link.'
-      );
+      showAlert('success', 'Check your email and reset your password with given link.');
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

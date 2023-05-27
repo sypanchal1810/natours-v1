@@ -6,7 +6,8 @@ block content
 
   main.form-main.u-margin-bottom-big
     .login-form
-      h2.heading-secondary.ma-bt-lg Log into your account
+      h2.heading-secondary.ma-bt-lg Email Verification
+
       form.form.form--login
         .form__group
           label.form__label(for='email') Email address
@@ -20,13 +21,7 @@ block content
             minlength='8'
           )
         .form__group
-          button#user-login.btn.btn--green(type='submit') Login
-          a.external-links(href='/forgot-password') Forgot Password
-
-          br
-          br
-          br
-          hr
-
-        .u-center-text.u-margin-top-small
-          a.login-with-google-btn(href='/auth/google') Sign in with Google
+          button#user-verify.btn.btn--green(
+            type='submit',
+            data-activation-token=`${activationToken}`
+          ) Verify Email

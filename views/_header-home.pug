@@ -29,14 +29,14 @@ header.header
 
   nav.nav--user
     ul.nav--user__list
-      if user
+      - if (user)
         li.nav--user__item
-          a.nav--user__link.nav__el--logout(href='/') Logout
+          a.nav--user__link.nav__el--logout(href='/auth/logout') Logout
         li.nav--user__item
           a.nav--user__link(href='/my-account')
             img.nav__user-img(src=`${user.photo}`, alt=`Photo of ${user.name}`)
             span.username= user.name.split(' ')[0]
-      else
+      - else
         li.nav--user__item
           a.nav--user__link(href='/login') Login
         li.nav--user__item

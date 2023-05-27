@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
+    googleId: String,
     name: {
       type: String,
       required: [true, 'A user must have a name'],
@@ -34,15 +35,16 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'lead-guide', 'guide', 'user'],
       default: 'user',
     },
+
     password: {
       type: String,
-      required: [true, 'Please provide strong password'],
+      // required: [true, 'Please provide strong password'],
       minlength: 8,
       select: false,
     },
     passwordConfirm: {
       type: String,
-      required: [true, 'Please confirm your password'],
+      // required: [true, 'Please confirm your password'],
       validate: {
         // This only works with .create and .save
         validator: function (el) {
@@ -51,16 +53,23 @@ const userSchema = new mongoose.Schema(
         message: 'Passwords are not same!!',
       },
     },
-    passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
-    createdAt: {
+    passwordChangedAt: Date,
+
+    accountActivationToken: String,
+    accountActivationExpires: Date,
+    activatedAt: {
       type: Date,
-      select: false,
+      select: true,
     },
     active: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+
+    createdAt: {
+      type: Date,
       select: false,
     },
     updatedAt: {
@@ -111,10 +120,10 @@ userSchema.pre('save', async function (req, res, next) {
   next();
 });
 
-userSchema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
-  next();
-});
+// userSchema.pre(/^find/, function (next) {
+//   this.find({ active: { $ne: false } });
+//   next();
+// });
 
 /*
 userSchema.pre('save', function () {
@@ -153,6 +162,16 @@ userSchema.methods.createPasswordResetToken = function () {
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
+};
+
+// Creating Account activation token
+userSchema.methods.createAccountActivationToken = function () {
+  const activationToken = crypto.randomBytes(32).toString('hex');
+
+  this.accountActivationToken = crypto.createHash('sha256').update(activationToken).digest('hex');
+
+  this.accountActivationExpires = Date.now() + 10 * 60 * 1000;
+  return activationToken;
 };
 
 const User = mongoose.model('User', userSchema);

@@ -3,9 +3,8 @@ extends baseEmail
 block content
   p Hi #{ firstName },
   br
-  p A password reset for your account was requested
-  p Reset your password by clicking on below
-
+  p Welcome to Natours, we're glad to have you 🎉🙏
+  p Please activate your account by clicking on below to Verify your Email:
   table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
     tbody
       tr
@@ -14,14 +13,14 @@ block content
             tbody
               tr
                 td
-                  a(href=`${url}`, target='_blank') Change Your Password
+                  a(href=`${url}`, target='_blank') Verify Your Email
 
   p Or Copy and paste the following link to your browser
   p
     a= `${url}`
 
   p Note that this link is valid for 10 minutes.
-  p After the time limit has expired, you will have to resubmit the request for a password reset.
+  p After the time limit has expired, you will have to create new account with new email id.
 
   p If you need any help with booking your next tour, please don't hesitate to contact me!
   p - Saurabh Panchal, CEO

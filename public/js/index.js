@@ -105,7 +105,7 @@ if (signupForm)
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('confirm-password').value;
 
-    signup(name, email, password, passwordConfirm);
+    signup({ name, email, password, passwordConfirm });
   });
 
 if (forgotPasswordForm)
@@ -134,7 +134,11 @@ if (loginForm)
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    login(email, password);
+
+    const userVerify = document.getElementById('user-verify');
+    userVerify
+      ? login(email, password, 'activate', userVerify.dataset.activationToken)
+      : login(email, password);
   });
 
 if (logOutBtn)

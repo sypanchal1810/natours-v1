@@ -9,6 +9,7 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
+const cookieSession = require('cookie-session');
 
 const appError = require('./utils/appErrors');
 const globalErrorHandler = require('./controllers/errorController');
@@ -19,6 +20,13 @@ const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const bookingController = require('./controllers/bookingController');
+const authController = require('./controllers/authController');
+
+const User = require('./models/userModel');
+const Email = require('./utils/email');
+
+const passport = require('passport');
+const { Strategy } = require('passport-google-oauth20');
 
 const app = express();
 
@@ -102,9 +110,90 @@ app.use((req, res, next) => {
   next();
 });
 
+// Passport.js for OAuth
+const googleOAuthOptions = {
+  clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback',
+};
+const verifyCallback = async (accessToken, refreshToken, profile, done) => {
+  const userProfile = profile;
+  // console.log('User Profile', userProfile);
+
+  try {
+    // Check if user already exists in the database
+    const user = await User.findOne({ googleId: userProfile.id });
+    // console.log(user, 'found');
+
+    // If User exists, pass the user object to the callback
+    if (user) return done(null, user);
+
+    // User doesn't exist, Create new user
+    const newUser = await User.create({
+      googleId: userProfile.id,
+      name: userProfile.displayName,
+      email: userProfile.emails[0].value,
+      photo: userProfile.photos[0].value,
+      active: true,
+      activatedAt: Date.now(),
+      createdAt: Date.now(),
+    });
+
+    // Save the new user to the database
+    const savedUser = await newUser.save({ validateBeforeSave: false });
+    return done(null, savedUser);
+  } catch (err) {
+    console.log(err);
+    return done(err, false);
+  }
+};
+passport.use(new Strategy(googleOAuthOptions, verifyCallback));
+
+// Save the session to the cookie
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Read the session from the cookie
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findById(id);
+  done(null, user);
+});
+
+app.use(
+  cookieSession({
+    name: 'session',
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.JWT_SECRET_KEY],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    // successRedirect: '/',
+    failureRedirect: '/login',
+    session: true,
+  }),
+  authController.LoggedInWithGoogle,
+  authController.isLoggedIn,
+  async (req, res, next) => {
+    // console.log('Callback from google');
+    res.redirect('/');
+  }
+);
+
 // Mounting the routers
 // Own Middleware
-
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
@@ -112,19 +201,6 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
-  /* 
-    res.status(404).json({
-      status: 'fail',
-      message: `Cannot find the ${req.originalUrl} on this server!!`,
-    });
-
-    const err = new Error(`Cannot find the ${req.originalUrl} on this server!!`);
-    err.status = 'fail';
-    err.statusCode = 404;
-
-    next(err);
-  */
-
   next(new appError(`Cannot find the ${req.originalUrl} on this server!!`, 404));
 });
 

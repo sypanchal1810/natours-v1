@@ -9,19 +9,22 @@ router.use(viewController.alerts);
 
 router.get('/', authController.isLoggedIn, viewController.getOverview);
 router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
+
 router.get('/signup', authController.isLoggedIn, viewController.getSignupForm);
 router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
+
+router.get(
+  '/activate-account/:activationToken',
+  authController.isLoggedIn,
+  viewController.getAccountActivationForm
+);
+
 router.get('/my-account', authController.protect, viewController.getMyAccount);
 
 router.get('/forgot-password', viewController.getForgotPasswordForm);
 router.get('/resetPassword/:resetToken', viewController.getResetPasswordForm);
 
-router.get(
-  '/my-tours',
-  // bookingController.createBookingCheckout,
-  authController.protect,
-  viewController.getMyTours
-);
+router.get('/my-tours', authController.protect, viewController.getMyTours);
 
 router.get('/my-reviews', authController.protect, viewController.getMyReviews);
 

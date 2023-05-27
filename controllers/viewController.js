@@ -47,6 +47,20 @@ exports.getSignupForm = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAccountActivationForm = catchAsync(async (req, res, next) => {
+  url = `${req.protocol}://${req.get('host')}`;
+
+  const { activationToken } = req.params;
+
+  console.log(activationToken);
+
+  res.status(200).render('verifyEmail', {
+    title: `Activate your Account`,
+    url,
+    activationToken,
+  });
+});
+
 exports.getLoginForm = catchAsync(async (req, res, next) => {
   url = `${req.protocol}://${req.get('host')}`;
 

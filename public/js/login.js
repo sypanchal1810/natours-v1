@@ -2,11 +2,14 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
 
-export const login = async (email, password) => {
+export const login = async (email, password, type, activationToken) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/api/v1/users/login',
+      url:
+        type === 'activate'
+          ? `/api/v1/users/activate-account/${activationToken}`
+          : '/api/v1/users/login',
       data: {
         email,
         password,
@@ -14,10 +17,13 @@ export const login = async (email, password) => {
     });
 
     if (res.data.status === 'success') {
-      showAlert('success', 'Logged in successfully!');
+      type === 'activate'
+        ? showAlert('success', 'Email verified successfully!')
+        : showAlert('success', 'Logged in successfully!');
+
       window.setTimeout(() => {
         location.assign('/');
-      }, 1500);
+      }, 2000);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

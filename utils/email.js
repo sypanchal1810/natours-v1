@@ -7,7 +7,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = `Saurabh Panchal - <${process.env.EMAIL_FROM}>`;
+    this.from = `NATOURS <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
@@ -23,8 +23,8 @@ module.exports = class Email {
       //   secure: false, // true for 465, false for other ports
       // });
 
-      // GMAIL
       return nodemailer.createTransport({
+        // GMAIL
         service: 'gmail',
         auth: {
           user: process.env.GMAIL_USERNAME,
@@ -63,6 +63,10 @@ module.exports = class Email {
 
     // 3) Create a transport and send email
     await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendAccountActivation() {
+    await this.send('accountActivation', 'Activate your account (valid for only 10 minutes)');
   }
 
   async sendWelcome() {
