@@ -63,7 +63,7 @@ exports.accountActivation = catchAsync(async (req, res, next) => {
     accountActivationExpires: { $gt: Date.now() },
   });
 
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     await User.findOneAndDelete({

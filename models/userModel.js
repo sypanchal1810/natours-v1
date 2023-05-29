@@ -139,7 +139,7 @@ userSchema.pre('save', function () {
 
 // Comparing the password given in login and original password
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
-  console.log(candidatePassword, userPassword);
+  // console.log(candidatePassword, userPassword);
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 

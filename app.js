@@ -122,7 +122,10 @@ const verifyCallback = async (accessToken, refreshToken, profile, done) => {
 
   try {
     // Check if user already exists in the database
-    const user = await User.findOne({ googleId: userProfile.id });
+    const user = await User.findOne({
+      googleId: userProfile.id,
+      email: userProfile.emails[0].value,
+    });
     // console.log(user, 'found');
 
     // If User exists, pass the user object to the callback
