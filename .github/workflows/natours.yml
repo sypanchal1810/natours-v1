@@ -2,8 +2,7 @@ name: Build and deploy Natours - Node.js project to Azure Web App
 
 on:
   push:
-    branches:
-      - main
+    branches: [master]
 
 env:
   NODE_VERSION: '18.x'
