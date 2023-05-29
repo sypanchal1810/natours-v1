@@ -1,12 +1,13 @@
 name: Natours Project CI/CD pipeline
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    branches:
+      - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js version 18
