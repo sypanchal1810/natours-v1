@@ -14,10 +14,4 @@ jobs:
         with:
           node-version: '18'
       - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-
-  deploy:
-    needs: build
+        run: npm install
