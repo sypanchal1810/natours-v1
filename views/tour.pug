@@ -27,6 +27,9 @@ block content
   //- Header
   include _header
 
+  - const isBookedByUser = bookedByUsers.find(u => u.id === user.id);
+  - const isReviewedByUser = reviewedByUsers.find(u => u.id === user.id);
+
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
@@ -106,9 +109,51 @@ block content
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
 
         - if(user)
-          - if(tour.bookedBy.find(el=> el.user.id === user.id))
-            button#booked-tour.btn.btn--green.btn--disable.span-all-rows(disabled) Already booked!
+          - if(isBookedByUser)
+            button#booked-tour.btn.btn--green.btn--disabled.span-all-rows(disabled) Already booked !
           - else
-            button#book-tour.btn.btn--green.span-all-rows(data-tour-id=`${tour.id}`) Book tour now!
+            button#book-tour.btn.btn--green.span-all-rows(data-tour-id=`${tour.id}`) Book tour now !
         - else
           a.btn.btn--green.span-all-rows(href='/login') Login to book tour
+
+  - if(isBookedByUser)
+    section#submit-review.section-apply.section-submit-review
+      .row
+        .apply
+          .apply__form
+            form.form.form--submit-review
+              .u-margin-bottom-medium
+                h2.heading-secondary Submit Tour Review
+
+              .form__group
+                label.form__label(for='review') Review
+                textarea#review.form__textarea(
+                  name='review',
+                  rows='5',
+                  cols='50',
+                  placeholder='Write Review Here',
+                  required
+                )
+
+              .form__group.ma-bt-md
+                label.form__label(for='rating') Ratings
+                input#rating.form__input(
+                  type='number',
+                  name='rating',
+                  min=1,
+                  max=5,
+                  step=0.1,
+                  placeholder='Ex. 4.8 (Max. 5)',
+                  required
+                )
+
+              .form__group
+                - if(isReviewedByUser)
+                  button#btn--submit-review.btn.btn--green.btn--disabled(disabled) Already Reviewed!
+                - else
+                  button#btn--submit-review.btn.btn--green(
+                    type='submit',
+                    data-tour-id=`${tour.id}`,
+                    data-user-id=`${user.id}`,
+                    data-tour-photo=`${tour.imageCover}`
+                  ) Submit

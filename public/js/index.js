@@ -2,6 +2,7 @@
 import '@babel/polyfill';
 import axios from 'axios';
 
+import { showAlert } from './alerts';
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
 import { signup } from './signup';
@@ -9,7 +10,7 @@ import { forgotPassword } from './forgotPassword';
 import { resetPassword } from './resetPassword';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
-import { showAlert } from './alerts';
+import { submitReview } from './submitReview';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -28,29 +29,45 @@ const bookBtn = document.getElementById('book-tour');
 
 const alertMessage = document.querySelector('body').dataset.alert;
 
+const scrollToTopBtn = document.getElementById('scrollToTop');
+const headerNav = document.querySelector('.header');
+
 let navCheckbox = document.querySelector('.nav__checkbox');
 let navLinks = document.querySelectorAll('.nav__link');
 
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-// Side nav links
 let sideNavLinks = document.querySelectorAll('.side-nav--link');
 
-// DELEGATION
+const submitReviewForm = document.querySelector('.form--submit-review');
+const submitReviewBtn = document.querySelector('#btn--submit-review');
+
+// Submit the tour Review
+if (submitReviewForm) {
+  document.querySelector('.apply').classList.add('backgroundTourImage');
+
+  submitReviewForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const { tourId, userId } = submitReviewBtn.dataset;
+
+    const review = document.getElementById('review').value;
+    const rating = document.getElementById('rating').value;
+    const tour = tourId;
+    const user = userId;
+
+    submitReview({ review, rating, tour, user });
+  });
+}
 
 // Toggle the active class in side nav of user profile
 if (sideNavLinks) {
   const url = window.location.href;
-
   sideNavLinks.forEach(link => {
     if (url.includes('my-account') && link.textContent.includes('Settings')) {
       link.classList.toggle('side-nav--active');
     }
-
     if (url.includes('my-tours') && link.textContent.includes('My Bookings')) {
       link.classList.toggle('side-nav--active');
     }
-
     if (url.includes('my-reviews') && link.textContent.includes('My Reviews')) {
       link.classList.toggle('side-nav--active');
     }
@@ -58,25 +75,24 @@ if (sideNavLinks) {
 }
 
 // Scroll to Top Button
-if (scrollToTopBtn) {
-  window.onscroll = () => {
-    if (
-      document.body.scrollTop > window.innerHeight ||
-      document.documentElement.scrollTop > window.innerHeight
-    ) {
-      scrollToTopBtn.style.opacity = 1;
-      scrollToTopBtn.style.display = 'block';
-    } else {
-      scrollToTopBtn.style.opacity = 0;
-      scrollToTopBtn.style.display = 'none';
-    }
-  };
-
-  scrollToTopBtn.addEventListener('click', function (e) {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  });
-}
+window.onscroll = () => {
+  if (
+    document.body.scrollTop > window.innerHeight ||
+    document.documentElement.scrollTop > window.innerHeight
+  ) {
+    scrollToTopBtn.style.opacity = 1;
+    scrollToTopBtn.style.display = 'block';
+    headerNav.classList.add('header-sticky');
+  } else {
+    scrollToTopBtn.style.opacity = 0;
+    scrollToTopBtn.style.display = 'none';
+    headerNav.classList.remove('header-sticky');
+  }
+};
+scrollToTopBtn.addEventListener('click', function (e) {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 
 // For mobile navigation
 if (navCheckbox) {

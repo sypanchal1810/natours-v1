@@ -1,7 +1,7 @@
 // Landing Page
 .header-container {
   height: 94.5vh;
-  margin-top: -7.5rem;
+  margin-top: -1.5rem;
   background-image: linear-gradient(
       to right bottom,
       rgba($color-primary-light, 0.8),
@@ -106,7 +106,7 @@
   }
 
   @include respond(tab-port) {
-    padding: 10rem 0;
+    padding: 13rem 0;
   }
 }
 
@@ -117,7 +117,7 @@
       rgba($color-white, 0.9) 50%,
       transparent 50%
     ),
-    url(../img/nat-10.jpg);
+    url(../../img/nat-10.jpg);
   background-size: 100%;
   border-radius: 3px;
   box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
@@ -129,7 +129,7 @@
         rgba($color-white, 0.9) 65%,
         transparent 65%
       ),
-      url(../img/nat-10.jpg);
+      url(../../img/nat-10.jpg);
     background-size: cover;
   }
 
@@ -139,7 +139,7 @@
         rgba($color-white, 0.9) 0%,
         rgba($color-white, 0.9) 100%
       ),
-      url(../img/nat-10.jpg);
+      url(../../img/nat-10.jpg);
   }
 
   &__form {
@@ -152,6 +152,7 @@
 
     @include respond(tab-port) {
       width: 100%;
+      padding: 3.9rem;
     }
   }
 }

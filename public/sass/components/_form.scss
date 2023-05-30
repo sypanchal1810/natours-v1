@@ -3,6 +3,25 @@
     margin-bottom: 2.5rem;
   }
 
+  &__textarea {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1.5rem;
+    color: inherit;
+    padding: 1.25rem 1.75rem;
+    border: none;
+    background-color: $color-grey-light-1;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    resize: none;
+  }
+
   &__input {
     display: block;
     width: 100%;

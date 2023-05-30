@@ -1,5 +1,5 @@
 .footer {
-  margin-top: -13vh;
+  margin-top: -10rem;
   padding: 10rem 6rem 6rem 6rem;
   background-color: $color-grey-dark-3;
   font-size: 1.4rem;
@@ -10,12 +10,12 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   z-index: 999;
-  width: 100.05%;
+  width: calc((100% - 0rem));
 
   @include respond(tab-port) {
-    margin-top: -8vh;
+    margin-top: -7rem;
     padding: 7rem 6rem 5rem 6rem;
-    width: 100%;
+    width: calc((100% - 0rem));
   }
 
   @include respond(phone) {

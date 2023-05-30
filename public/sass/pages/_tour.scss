@@ -5,15 +5,15 @@
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
 
   @include respond(tab-land) {
-    height: 66vh;
+    height: 70vh;
   }
 
   @include respond(tab-port) {
-    height: 55vh;
+    height: 60vh;
   }
 
   @include respond(phone) {
-    height: 40vh;
+    height: 45vh;
   }
 }
 
@@ -313,13 +313,13 @@
     to($color-primary-dark)
   );
   background: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
-  clip-path: polygon(
+  -webkit-clip-path: polygon(
     0 var(--section-rotate),
     100% 0,
     100% calc(100% - var(--section-rotate)),
     0 100%
   );
-  -webkit-clip-path: polygon(
+  clip-path: polygon(
     0 var(--section-rotate),
     100% 0,
     100% calc(100% - var(--section-rotate)),
@@ -421,13 +421,27 @@
 }
 
 .section-cta {
+  z-index: 999;
   margin-top: calc(0px - var(--section-rotate));
   padding: 3rem;
-  padding-bottom: 11rem;
+  padding-bottom: calc(var(--section-rotate));
   padding-top: calc(10rem + var(--section-rotate));
   background-color: $color-grey-light-1;
+  -webkit-clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
+  clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
 
   @include respond(phone) {
+    padding: 1.5rem;
     padding-top: calc(8rem + var(--section-rotate));
   }
 }
@@ -439,7 +453,7 @@
   overflow: hidden;
   background-color: $color-white;
   padding: 9rem 5rem 9rem 20rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
   -webkit-box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
   margin-bottom: 10rem;
@@ -459,11 +473,11 @@
 
   @include respond(phone) {
     padding: 4rem 3rem 3rem 13rem;
+    width: 100%;
   }
 
-  @media only screen and (max-width: 29em) {
-    width: 38rem;
-  }
+  // @media only screen and (max-width: 29em) {
+  // }
 
   &__img {
     height: 15rem;
@@ -554,5 +568,49 @@
     @include respond(phone) {
       font-size: 1.3rem;
     }
+  }
+}
+
+.section-submit-review {
+  margin-top: calc(0px - var(--section-rotate));
+  padding-top: calc(10rem + var(--section-rotate));
+
+  transform: skewX(0);
+
+  & > * {
+    transform: skewY(0);
+  }
+}
+
+.backgroundTourImage {
+  background-image: linear-gradient(
+      105deg,
+      rgba($color-white, 0.9) 0%,
+      rgba($color-white, 0.9) 50%,
+      transparent 50%
+    ),
+    url(../../img/tours/tour-2-cover.jpg);
+  background-size: 100%;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
+
+  @include respond(tab-land) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 65%,
+        transparent 65%
+      ),
+      url(../../img/tours/tour-2-cover.jpg);
+    background-size: cover;
+  }
+
+  @include respond(tab-port) {
+    background-image: linear-gradient(
+        to right,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 100%
+      ),
+      url(../../img/tours/tour-2-cover.jpg);
   }
 }

@@ -28,12 +28,22 @@ exports.getTour = catchAsync(async (req, res, next) => {
   if (!tour) {
     return next(new appError(`No Tour exists with this name`, 404));
   }
+  // console.log(tour.bookedBy);
+  const bookedByUsers = tour.bookedBy.map(el => {
+    if (el.user !== null) return el.user;
+  });
+
+  const reviewedByUsers = tour.reviews.map(el => {
+    if (el.user !== null) return el.user;
+  });
 
   url = `${req.protocol}://${req.get('host')}`;
 
   res.status(200).render('tour', {
     title: `${tour.name} Tour`,
     tour,
+    bookedByUsers,
+    reviewedByUsers,
     url,
   });
 });
@@ -130,7 +140,7 @@ exports.alerts = catchAsync(async (req, res, next) => {
   const { alert } = req.query;
 
   if (alert === 'booking') {
-    res.locals.alert = `Your booking was successful! Please check your email for a confirmation. If your booking doesn't show up here immediately, please come back later.`;
+    res.locals.alert = `Your booking was successful! If your booking doesn't show up here immediately, please come back later.`;
   }
 
   next();

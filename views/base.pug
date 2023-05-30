@@ -20,11 +20,15 @@ html
       title Natours | #{ title }
 
   body(data-alert=`${alert ? alert : ''}`) 
-    // Content
+    //- Content
     block content
 
-    // FOOTER
+    //- FOOTER
     include _footer
+
+    //- Scroll To Top Button
+    button#scrollToTop.btn--top
+      ion-icon.btn--top__icon(name='arrow-up-circle-outline')
 
     //- Axios Library
     script(

@@ -14,7 +14,20 @@
   -ms-flex-align: center;
   align-items: center;
   flex-wrap: nowrap !important;
-  transition: all 0.8s ease-out;
+  transition: all 0.2s ease-out;
+
+  &-sticky {
+    position: fixed;
+    width: calc((100% - 4rem));
+    z-index: 99999;
+    margin-top: -2rem;
+
+    @include respond(tab-port) {
+      width: calc((100% - 1rem));
+      padding-top: 3rem;
+      padding-bottom: 1.5rem;
+    }
+  }
 
   &--logo {
     -webkit-box-flex: 0;
