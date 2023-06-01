@@ -30,7 +30,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: [`${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`],
+            images: [
+              `https://raw.githubusercontent.com/sypanchal1810/natours-v1/master/public/img/tours/${tour.imageCover}`,
+            ],
           },
           unit_amount: tour.price * 100,
         },
@@ -38,9 +40,10 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
   });
+  //
 
   // Create session as response
-  res.status(200).json({
+  https: res.status(200).json({
     status: 'success',
     session,
   });
