@@ -27,8 +27,8 @@ block content
   //- Header
   include _header
 
-  - const isBookedByUser = bookedByUsers.find(u => u.id === user.id);
-  - const isReviewedByUser = reviewedByUsers.find(u => u.id === user.id);
+  - const isBookedByUser = user ? bookedByUsers.find(u => u.id === user.id) : '';
+  - const isReviewedByUser = user ? reviewedByUsers.find(u => u.id === user.id) : '';
 
   section.section-header
     .header__hero
