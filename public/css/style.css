@@ -702,6 +702,7 @@ body {
   display: inline-block;
   background-image: linear-gradient(to right, #7ed56f, #28b485);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 @media only screen and (max-width: 56.25em) {
