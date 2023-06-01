@@ -11,13 +11,8 @@
   }
 
   @include respond(tab-port) {
-    max-width: 70rem;
+    width: 33rem;
     grid-gap: 5.5rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include respond(phone) {
-    max-width: 30rem;
     grid-template-columns: repeat(1, 1fr);
   }
 }
