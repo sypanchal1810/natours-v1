@@ -47,6 +47,10 @@
   margin-top: -15rem;
   z-index: 10;
 
+  @include respond(tab-port) {
+    margin-top: -23rem;
+  }
+
   & > * {
     transform: skewY(7deg);
   }
