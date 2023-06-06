@@ -5,7 +5,7 @@
 [1200 - 1800] is where our normal styles apply
 1800px + :      Big desktop
 
-$breakpoint arguement choices:
+$breakpoint argument choices:
 - phone
 - tab-port
 - tab-land
@@ -1784,6 +1784,11 @@ body {
   transform: skewY(-7deg);
   margin-top: -15rem;
   z-index: 10;
+}
+@media only screen and (max-width: 56.25em) {
+  .section-about {
+    margin-top: -23rem;
+  }
 }
 .section-about > * {
   transform: skewY(7deg);
