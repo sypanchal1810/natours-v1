@@ -1,6 +1,5 @@
-.cache
-.parcel-cache
 .vscode
 node_modules
+package-lock.json
 *.env
 natour-v1.PublishSettings
