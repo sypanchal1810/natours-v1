@@ -22,28 +22,23 @@
 }
 
 html {
-  // This defines what 1rem is
-  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+  font-size: 62.5%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   transition: all 0.3s;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  // margin-top: 2rem;
 
   @include respond(tab-land) {
-    // width < 1200?
-    font-size: 56.25%; // 1rem = 9px, 9/16 = 56.25%
+    font-size: 56.25%;
   }
 
   @include respond(tab-port) {
-    // width < 900?
-    font-size: 50%; // 1rem = 8px, 8/16 = 50%
+    font-size: 50%;
   }
 
   @include respond(big-desktop) {
-    // width >= 1800?
-    font-size: 75%; // 1rem = 12, 12/16 = 75%
+    font-size: 75%;
   }
 }
 
@@ -53,7 +48,6 @@ body {
   font-family: 'Lato', sans-serif;
   color: $color-grey-dark;
   padding: 2rem;
-  // margin-top: -2rem;
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;

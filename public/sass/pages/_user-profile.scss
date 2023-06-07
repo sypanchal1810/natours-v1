@@ -98,11 +98,6 @@
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 
-    // @include respond(tab-land) {
-    //   font-size: 1.4rem;
-    //   padding: 1rem 3rem;
-    // }
-
     @include respond(tab-land) {
       font-size: 1.3rem;
       padding: 1rem 3rem;
@@ -277,7 +272,6 @@
   }
 
   .user-view__content {
-    // transform: translateX(-11.5rem);
     margin-left: -3rem;
   }
 
