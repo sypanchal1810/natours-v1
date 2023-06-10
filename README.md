@@ -406,10 +406,16 @@ FIREBASE_STORAGE_BUCKET_URL=your_storage_bucket_url
    npm install
    ```
 
-3. Start the application:
+3. Import the development data in the database using following command:
+
+   ```
+   node dev-data/import-dev-data.js --import
+   ```
+
+4. Start the application:
 
    ```
    npm start
    ```
 
-4. Open your web browser and visit `http://127.0.0.1:5000` to access the application.
+5. Open your web browser and visit `http://127.0.0.1:5000` to access the application.
