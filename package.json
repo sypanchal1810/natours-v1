@@ -17,7 +17,7 @@
     "build:sass": "node-sass ./public/sass/main.scss ./public/css/style.css",
     "format": "prettier --write **/**.**"
   },
-  "author": "saurabh",
+  "author": "sypanchal1810",
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
