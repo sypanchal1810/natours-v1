@@ -387,8 +387,7 @@ body {
   border-bottom: 1px solid #55c57a;
   padding: 3px;
   -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  cursor: pointer; }
+  transition: all 0.2s; }
   @media only screen and (max-width: 37.5em) {
     .btn-text, .btn-text:link, .btn-text:visited {
       font-size: 1.3rem !important; } }
@@ -564,14 +563,6 @@ body {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   resize: none; }
-  .form__textarea:focus {
-    outline: none;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-    border-bottom: 3px solid #55c57a; }
-  .form__textarea:focus:invalid {
-    border-bottom: 3px solid #ff7730; }
-  .form__textarea::-webkit-input-placeholder {
-    color: #999; }
 
 .form__input {
   display: block;
@@ -805,50 +796,6 @@ body {
 @media only screen and (max-width: 37.5em) {
   .icon-open {
     display: block; } }
-
-.popup {
-  height: 100vh;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 99999999;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.1s; }
-  .popup__content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-    background-color: #fff;
-    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    display: table;
-    overflow: hidden;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.25);
-    transition: all 0.1s 0.1s; }
-  .popup:target {
-    opacity: 1;
-    visibility: visible; }
-  .popup:target .popup__content {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1); }
-  .popup__close:link, .popup__close:visited {
-    color: #777;
-    position: absolute;
-    top: 2.5rem;
-    right: 2.5rem;
-    font-size: 3rem;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.1s;
-    line-height: 1; }
-  .popup__close:hover {
-    color: #55c57a; }
 
 .story {
   width: 75%;
@@ -1084,7 +1031,7 @@ body {
   @media only screen and (max-width: 56.25em) {
     .row {
       max-width: 50rem;
-      padding: 0 1.5rem; } }
+      padding: 0 3rem; } }
   .row::after {
     content: '';
     display: table;
@@ -1696,7 +1643,7 @@ body {
 
 .section-map {
   position: relative;
-  height: 75rem;
+  height: 65rem;
   margin-top: calc(0px - var(--section-rotate)); }
 
 #map {

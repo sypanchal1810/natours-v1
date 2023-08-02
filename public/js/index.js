@@ -11,6 +11,7 @@ import { resetPassword } from './resetPassword';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 import { submitReview } from './submitReview';
+import { updateReview } from './updateReview';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -29,18 +30,62 @@ const bookBtn = document.getElementById('book-tour');
 
 const alertMessage = document.querySelector('body').dataset.alert;
 
+// Scroll to Top
 const scrollToTopBtn = document.getElementById('scrollToTop');
 const headerNav = document.querySelector('.header');
 
+// Overview page Navigation
 let navCheckbox = document.querySelector('.nav__checkbox');
 let navLinks = document.querySelectorAll('.nav__link');
 
+// User Profile Navigation
 let sideNavLinks = document.querySelectorAll('.side-nav--link');
 
+// Submit Review
 const submitReviewForm = document.querySelector('.form--submit-review');
 const submitReviewBtn = document.querySelector('#btn--submit-review');
 
-// Submit the tour Review
+// Update Review
+const updateReviewForm = document.querySelector('.form--update-review');
+const updateReviewBtn = document.querySelector('#btn--update-review');
+const deleteReviewBtn = document.querySelector('#delete__review--btn');
+
+// Delete The Tour Review
+if (deleteReviewBtn) {
+  deleteReviewBtn.addEventListener('click', async e => {
+    const id = e.target.dataset.reviewId;
+
+    try {
+      const res = await axios({
+        method: 'DELETE',
+        url: `/api/v1/reviews/${id}`,
+      });
+
+      if (!res.data.data) {
+        showAlert('success', 'Your tour review has been deleted successfully...!');
+        window.setTimeout(() => {
+          location.reload(true);
+        }, 2000);
+      }
+    } catch (err) {
+      showAlert('error', err.response.data.message);
+    }
+  });
+}
+
+// Update The Tour Review
+if (updateReviewForm) {
+  updateReviewForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const review = document.getElementById('review').value;
+    const rating = document.getElementById('rating').value;
+    const id = updateReviewBtn.dataset.reviewId;
+
+    updateReview(id, { review, rating });
+  });
+}
+
+// Submit The Tour Review
 if (submitReviewForm) {
   document.querySelector('.apply').classList.add('backgroundTourImage');
 
@@ -48,7 +93,6 @@ if (submitReviewForm) {
     e.preventDefault();
 
     const { tourId, userId } = submitReviewBtn.dataset;
-
     const review = document.getElementById('review').value;
     const rating = document.getElementById('rating').value;
     const tour = tourId;
@@ -115,7 +159,6 @@ if (mapBox) {
 if (signupForm)
   signupForm.addEventListener('submit', e => {
     e.preventDefault();
-
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -127,21 +170,16 @@ if (signupForm)
 if (forgotPasswordForm)
   forgotPasswordForm.addEventListener('submit', e => {
     e.preventDefault();
-
     const email = document.getElementById('email').value;
-
     forgotPassword(email);
   });
 
 if (resetPasswordForm)
   resetPasswordForm.addEventListener('submit', e => {
     e.preventDefault();
-
     const { resetToken } = document.getElementById('change-password').dataset;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('confirm-password').value;
-
-    console.log(resetToken, password, passwordConfirm);
     resetPassword(password, passwordConfirm, resetToken);
   });
 

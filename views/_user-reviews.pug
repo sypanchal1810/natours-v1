@@ -13,11 +13,59 @@ mixin reviewCard(r)
 
         p.review__tour= `— ${r.tour.name}`
 
+        .u-center-text(style='margin-top: 2rem')
+          a#update__review--data.btn-text(
+            style='margin-right: 2rem',
+            href='#update-review',
+            data-review-text=`${r.review}`,
+            data-review-rating=`${r.rating}`,
+            data-review-id=`${r.id}`
+          ) Update
+          #delete__review--btn.btn-text(data-review-id=`${r.id}`) Delete
+
+  section#update-review.popup.form--update-review
+    .row.popup__content
+      a.popup__close(href='/my-reviews') &times;
+      .apply
+        .apply__form
+          form.form.form--submit-review
+            .u-margin-bottom-medium
+              h2.heading-secondary Update Tour Review
+
+            .form__group
+              label.form__label(for='review') Review
+              textarea#review.form__textarea(
+                name='review',
+                rows='5',
+                cols='50',
+                placeholder='Write Review Here',
+                required
+              ) #{ r.review }
+
+            .form__group.ma-bt-md
+              label.form__label(for='rating') Ratings
+              input#rating.form__input(
+                type='number',
+                name='rating',
+                min=1,
+                max=5,
+                step=0.1,
+                placeholder='Ex. 4.8 (Max. 5)',
+                value=`${r.rating}`,
+                required
+              ) 
+
+            .form__group
+              button#btn--update-review.btn.btn--green(type='submit', data-review-id=`${r.id}`) Update
+
 block user-view
   .user-view__reviews-container
     .u-center-text.u-margin-bottom-medium
       h2.heading-secondary My Reviews
 
     .reviews__user-profile
-      each review in reviews
-        +reviewCard(review)
+      - if(reviews.length === 0)
+        h2.u-center-text.heading-tertiary= `No Tour has been Reviewed yet :( !!`
+      - else
+        each review in reviews
+          +reviewCard(review)
